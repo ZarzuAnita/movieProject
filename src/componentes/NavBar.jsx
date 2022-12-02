@@ -5,6 +5,7 @@ import Home from './Home/Home';
 import Movies from './Movies';
 import TvShows from './TvShows';
 import Filters from './Filters';
+import logo from './logo.png';
 
 import '../styles/navBarStyle.css';
 
@@ -14,7 +15,7 @@ export default function NavBar() {
     <Fragment>
         <nav className=''>
             <div className='nav-options'>           
-                    <h1>Logo</h1>
+                    <img src={logo} width="250" height="80"/>
                     <NavLink to=''>
                     <span>Home</span>
                     </NavLink>
