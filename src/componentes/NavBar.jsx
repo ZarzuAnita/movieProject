@@ -1,14 +1,13 @@
 import React, { Fragment } from 'react';
-import {BiSearchAlt} from 'react-icons/bi';
+import { BiSearchAlt } from 'react-icons/bi';
 import { Routes, Route, NavLink} from 'react-router-dom';
+import Home from './Home/Home';
 import Movies from './Movies';
 import TvShows from './TvShows';
-import Trending from './Trends';
 import Filters from './Filters';
 
-import '../styles/navBarStyle.css'
+import '../styles/navBarStyle.css';
 
-// id = 'search' mirar luego porqué no está funcionando el posicionarse dentro de la barra de buscador
 
 export default function NavBar() {
   return (
@@ -17,13 +16,13 @@ export default function NavBar() {
             <div className='nav-options'>           
                     <h1>Logo</h1>
                     <NavLink to=''>
+                    <span>Home</span>
+                    </NavLink>
+                    <NavLink to='/Movies'>
                     <span>Movies</span>
                     </NavLink>
                     <NavLink to='/TvShows'>
                     <span>Tv Shows</span>
-                    </NavLink>
-                    <NavLink to='/Trending'>
-                    <span>Trending</span>
                     </NavLink>
                     <NavLink to='/Filters'>
                     <span>Filters</span>
@@ -35,12 +34,12 @@ export default function NavBar() {
             </div>
         </nav>
       <Routes>
-          <Route path ='' element= {<Movies/>}/>
+          <Route path ='' element= {<Home/>}/>
+          <Route path ='Movies' element= {<Movies/>}/>
           <Route path ='TvShows' element= {<TvShows/>}/>
-          <Route path ='Trending' element= {<Trending/>}/>
           <Route path ='Filters' element= {<Filters/>}/>
       </Routes>
 
     </Fragment>
   )
-}
+};
