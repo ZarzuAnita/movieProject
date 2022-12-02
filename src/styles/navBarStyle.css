@@ -2,7 +2,7 @@ nav {
     width: 100vw;
     display: flex;
     justify-content: space-between;
-    background-color: #001219;
+    background-color: #000000;
     align-items: center;
 }
 nav h1{
@@ -52,7 +52,7 @@ nav span:hover{
     color: black;
 }
 .input-group input::placeholder{
-    color: black;
+    color: rgb(0, 0, 0);
 }
 .input-group input:focus{
     outline: none;
