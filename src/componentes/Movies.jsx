@@ -20,7 +20,7 @@ import React, { Fragment, useEffect } from 'react'
     </Fragment>
   
   )
-}
+};
 
 
-export default Movies
+export default Movies;
