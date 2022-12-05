@@ -17,7 +17,7 @@ function Home (){
           const results = data.data.results;
           setMovies(results);
           console.log(movies);
-          console.log(images)
+          console.log(images);
           
         };
 
@@ -25,18 +25,33 @@ function Home (){
         MovieCall()
       }, []); 
 
+      const randomMovie =  movies[Math.floor(Math.random() * movies.length)];
+      console.log(randomMovie);
 
     return (
+      <div>
+       { /* <div>
+            {Object.keys(randomMovie).map((random) => {
+              return (
+                <div className=''>
+                    <img src={images + random.poster_path} alt="image not found"/>
+                    <h3>{random.title}</h3>
+                </div>
+              )
+            })};
+        </div>
+          */}
         <div>
             {movies.map((movie) => {
                 return (
                  <div className="">
-                    <img src={images + movie.poster_path} alt="image"/>
+                    <img src={images + movie.poster_path} alt="image not found"/>
                     <h3>{movie.title}</h3>
                  </div>
                 )
             })};
         </div>
+      </div>
     )
 };
 
