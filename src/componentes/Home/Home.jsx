@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 
 function Home (){
     const [movies, setMovies] = useState([]);
+    const [randomMov, setRandomMov] = useState({});
     const Api = 'https://api.themoviedb.org/3/discover/movie';
     const images = 'https://image.tmdb.org/t/p/w500/';
 
-    const MovieCall = async () =>{
+    const movieCall = async () =>{
         const data = await axios.get (Api,{
           params: {
             api_key:'3bb50757489312cdb75262aa3722fec4'
@@ -16,36 +17,29 @@ function Home (){
           })
           const results = data.data.results;
           setMovies(results);
-          console.log(movies);
-          console.log(images);
-          
+          const random = Math.floor(Math.random() * results.length);
+          const randomMovie = results[random];
+          console.log(randomMovie);
+          setRandomMov(randomMovie);  
         };
 
     useEffect(() =>{
-        MovieCall()
-      }, []); 
+        movieCall();
+      }, []);
 
-      const randomMovie =  movies[Math.floor(Math.random() * movies.length)];
-      console.log(randomMovie);
+
 
     return (
       <div>
-       { /* <div>
-            {Object.keys(randomMovie).map((random) => {
-              return (
-                <div className=''>
-                    <img src={images + random.poster_path} alt="image not found"/>
-                    <h3>{random.title}</h3>
-                </div>
-              )
-            })};
-        </div>
-          */}
+          <div className=''>
+              <img src={randomMov ? `${images}${randomMov.backdrop_path}` : ""} alt="image not found"/>
+              <h3>{randomMov.title}</h3> 
+          </div>
         <div>
-            {movies.map((movie) => {
+            {movies.map((movie, index) => {
                 return (
-                 <div className="">
-                    <img src={images + movie.poster_path} alt="image not found"/>
+                 <div key={index} className="">
+                    <img src={movie ? images + movie.poster_path : ""} alt="image not found"/>
                     <h3>{movie.title}</h3>
                  </div>
                 )
