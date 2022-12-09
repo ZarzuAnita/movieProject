@@ -1,0 +1,57 @@
+
+
+
+.tablero{ 
+    width: 100%;
+    padding: 5px;
+    padding-right: 15px;
+    display: flex;
+    flex-direction: row;
+
+
+
+
+  }
+  .tablero h2{ 
+    width: 10%;
+    padding: 5px;
+    padding-right: 15px;
+    display: flex;
+    justify-content:flex-start ;
+
+  }
+
+
+.moviesContainerAction{
+    width: 300px;
+    margin: 25px 0px 4px 15px;
+    border-radius: 18px;
+  
+}
+
+.tablero img{
+    position: relative ;
+    cursor: pointer;
+    transition: .7s;
+    margin: 5px;
+    display: flex;
+    justify-content:flex-start ;
+}
+
+#playIcon {
+    top: 90%;
+    left: 20%;
+    transform: translate(15%, -110%);
+    visibility: visible;
+    z-index: 100;
+    cursor: pointer;
+} 
+
+.tablero h2{
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.moviesContainerAction img:hover{
+    transform: scale(1.05);
+}

@@ -6,7 +6,6 @@ import Movies from './Movies';
 import TvShows from './TvShows';
 import Filters from './Filters';
 import logo from './logo.png';
-
 import '../styles/navBarStyle.css';
 
 
