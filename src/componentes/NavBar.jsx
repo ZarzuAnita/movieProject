@@ -29,7 +29,7 @@ export default function NavBar() {
                     </NavLink>
             </div>
             <div className='input-group'>
-            <BiSearchAlt fontSize={36} color ='white' id='search'/> 
+            <BiSearchAlt fontSize={36} color ='white' id='search'/>
             <input type ="text" placeholder='Search your movie'/>
             </div>
         </nav>
