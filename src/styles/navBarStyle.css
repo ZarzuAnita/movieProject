@@ -57,3 +57,20 @@ nav span:hover{
 .input-group input:focus{
     outline: none;
 }
+.popup{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 20%;
+    width: 1000 px;
+    height: 1000 px;
+    border-radius: 8px;
+    right: 1px;
+    left: 15px;
+    padding: 16px;
+}
+.X{
+    position: relative;
+}
