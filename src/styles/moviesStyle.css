@@ -55,3 +55,9 @@
 .moviesContainerAction img:hover{
     transform: scale(1.05);
 }
+
+.simple{
+    margin-bottom: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
