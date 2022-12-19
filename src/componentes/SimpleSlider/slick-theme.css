@@ -1,4 +1,7 @@
 @charset 'UTF-8';
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css');
+
+
 /* Slider */
 
 
@@ -88,6 +91,7 @@
 .slick-prev:before
 {
     content: '<';
+
 }
 [dir='rtl'] .slick-prev:before
 {

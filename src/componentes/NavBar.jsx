@@ -5,7 +5,6 @@ import Home from './Home/Home';
 import { useState, useEffect } from 'react';
 import Movies from './Movies';
 import TvShows from './TvShows';
-import Filters from './Filters';
 import logo from './logo.png';
 import '../styles/navBarStyle.css';
 import axios from 'axios';
@@ -56,9 +55,7 @@ export default function NavBar() {
                     <NavLink to='/TvShows'>
                     <span>Tv Shows</span>
                     </NavLink>
-                    <NavLink to='/Filters'>
-                    <span>Filters</span>
-                    </NavLink>
+               
             </div>
             <div className='input-group'>
               <div onClick={() => setLayer(true)}>
@@ -82,7 +79,7 @@ export default function NavBar() {
           <Route path ='' element= {<Home/>}/>
           <Route path ='Movies' element= {<Movies/>}/>
           <Route path ='TvShows' element= {<TvShows/>}/>
-          <Route path ='Filters' element= {<Filters/>}/>
+      
       </Routes>
 
     </Fragment>
