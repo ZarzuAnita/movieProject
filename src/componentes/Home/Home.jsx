@@ -184,7 +184,7 @@ function Home (){
         </div>
         <div className="simple">
             <h2>Discover Movies</h2>
-            
+           
             {movies.map((movie, index) => {
                 return (
                  <div key={index} className="">
