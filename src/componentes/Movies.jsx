@@ -105,21 +105,7 @@ function Movies() {
     setWesternMovies(results5)
     console.log(western)
 
-
-    const respTrailer = await axios.get(trailerApi, {
-      params: {
-        api_key: process.env.REACT_APP_API_KEY,
-        language: 'en-US',
-        append_to_response: 'videos',
-
-
-      }
-    })
-    const results6 = respTrailer.data.results;
-    setTrailer(results6)
-    console.log(trailer)
-  }
-
+ }
 
   const getMovieTrailer = async (movieId) => {
     const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${process.env.REACT_APP_API_KEY}`);
@@ -129,6 +115,7 @@ function Movies() {
 
   const handlePlayClick = async (movieId) => {
     const movieTrailer = await getMovieTrailer(movieId);
+    console.log(movieTrailer)
     setTrailer(movieTrailer);
   }
 
@@ -146,12 +133,7 @@ function Movies() {
   }, [])
   console.log(popularMovies)
 
-  useEffect(() => {
-    getMovieTrailer()
-
-  })
-
-
+  
   const settings = {
     className: "center",
     centerMode: true,
@@ -160,6 +142,7 @@ function Movies() {
     slidesToShow: 5,
     slidesToScroll: 1,
     speed: 500,
+  
     responsive: [
       {
         breakpoint: 1024,
@@ -190,27 +173,30 @@ function Movies() {
 
   const opts = {
     width: '100%',
-    height: '100%',
+    height: '400px',
     playerVars: {
       autoplay: 1,
     },
   };
-
-
+  function toTop() {
+    window.scrollTo(0, 0);
+  }
 
   return (
+    <div>
+      <div id= 'trailer'>        
+      </div>
     <Fragment>
       <div>
         {trailer && (
-          <YouTube
-            id="trailer"
-            videoId={trailer.key}
+          <YouTube         
+            videoId={trailer.results[0].key}
             onReady={handleReady}
             opts={opts}  
           />
         )}
         <div style={{ display: trailer ? 'block' : 'none' }}>
-          <AiOutlineClose className="trailer__close" onClick={handleCloseClick} />
+          <AiOutlineClose className="trailerClose" onClick={handleCloseClick} />
         </div>
       </div>
 
@@ -218,10 +204,9 @@ function Movies() {
         <h2>Action</h2>
         <Slider {...settings}>
           {popularMovies.map((movie) => (
-            <div >
+            <div>
               <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
-              <a href="#"></a>
-              <AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon' href="#trailer" />
+              <a onClick={toTop}><AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon'/></a>
             </div>
 
           ))}
@@ -235,7 +220,7 @@ function Movies() {
           {comedy.map((movie) => (
             <div className=''>
               <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
-              <AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon' href="#trailer" />
+              <a onClick={toTop}><AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon'/></a>
             </div>
           ))}
         </Slider>
@@ -247,7 +232,7 @@ function Movies() {
           {drama.map((movie) => (
             <div className=''>
               <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
-              <AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon' href="#trailer" />
+              <a onClick={toTop}><AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon'/></a>
             </div>
           ))}
         </Slider>
@@ -260,7 +245,7 @@ function Movies() {
           {sf.map((movie) => (
             <div className=''>
               <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
-              <AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon'href="#trailer" />
+              <a onClick={toTop}><AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon'/></a>
             </div>
           ))}
         </Slider>
@@ -272,13 +257,14 @@ function Movies() {
           {western.map((movie) => (
             <div className=''>
               <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
-              <AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon'href="#trailer"/>
+              <a onClick={toTop}><AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon'/></a>
             </div>
           ))}
         </Slider>
       </div>
 
     </Fragment>
+    </div>
   )
 }
 

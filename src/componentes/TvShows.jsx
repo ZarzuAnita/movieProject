@@ -100,22 +100,8 @@ function TvShows() {
     const results5 = respReality.data.results;
     setRealityTv(results5)
     console.log(reality)
-    
+  }  
 
-
-    const respTrailer = await axios.get(trailerApi, {
-      params: {
-        api_key: process.env.REACT_APP_API_KEY,
-        language: 'en-US',
-        append_to_response: 'videos',
-
-
-      }
-    })
-    const results6 = respTrailer.data.results;
-    setTrailerTv(results6)
-    console.log(trailerTv)
-  }
 
 
   const getTvTrailer = async (tvId) => {
@@ -141,10 +127,6 @@ function TvShows() {
     PopularTvCall()
   }, [])
 
-  useEffect(() => {
-    getTvTrailer()
-
-  })
   const settings = {
     className: "center",
     centerMode: true,
@@ -183,26 +165,27 @@ function TvShows() {
 
   const opts = {
     width: '100%',
-    height: '100%',
+    height: '400px',
     playerVars: {
       autoplay: 1,
     },
   };
-
+  function toTop() {
+    window.scrollTo(0, 0);
+  }
 
   return (
     <Fragment>
     <div>
         {trailerTv && (
           <YouTube
-            id="trailer"
-            videoId={trailerTv.key}
+            videoId={trailerTv.results[0].key}
             onReady={handleReady}
             opts={opts}  
           />
         )}
         <div style={{ display: trailerTv ? 'block' : 'none' }}>
-          <AiOutlineClose className="trailer__close" onClick={handleCloseClick} />
+          <AiOutlineClose className="trailerClose" onClick={handleCloseClick} />
         </div>
       </div>
   
@@ -212,8 +195,7 @@ function TvShows() {
           {comedyTv.map((tv) => (
             <div >
               <img width='200' src={tv.poster_path ? `${Images}${tv.poster_path}` : notAvailable} alt='' />
-              <a href="#"></a>
-              <AiFillPlayCircle onClick={() => handlePlayClick(tv.id)} color='purple' fontSize={45} id='playIcon' href="#trailer" />
+              <a onClick={toTop}><AiFillPlayCircle onClick={() => handlePlayClick(tv.id)} color='purple' fontSize={45} id='playIcon'/></a>
             </div>
 
           ))}
@@ -226,18 +208,20 @@ function TvShows() {
           {animation.map((tv) => (
             <div className=''>
               <img width='200' src={tv.poster_path ? `${Images}${tv.poster_path}` : notAvailable} alt='' />
-              <AiFillPlayCircle onClick={() => handlePlayClick(tv.id)} color='purple' fontSize={45} id='playIcon' href="#trailer" />
+              <a onClick={toTop}><AiFillPlayCircle onClick={() => handlePlayClick(tv.id)} color='purple' fontSize={45} id='playIcon'/></a>
             </div>
           ))}
         </Slider>
       </div>
+      
+      
       <div className="simple">
         <h2>Documentary</h2>
         <Slider {...settings}>
           {documentary.map((tv) => (
             <div className=''>
               <img width='200' src={tv.poster_path ? `${Images}${tv.poster_path}` : notAvailable} alt='' />
-              <AiFillPlayCircle onClick={() => handlePlayClick(tv.id)} color='purple' fontSize={45} id='playIcon' href="#trailer" />
+              <a onClick={toTop}><AiFillPlayCircle onClick={() => handlePlayClick(tv.id)} color='purple' fontSize={45} id='playIcon'/></a>
             </div>
           ))}
         </Slider>
@@ -249,7 +233,7 @@ function TvShows() {
           {mystery.map((tv) => (
             <div className=''>
               <img width='200' src={tv.poster_path ? `${Images}${tv.poster_path}` : notAvailable} alt='' />
-              <AiFillPlayCircle onClick={() => handlePlayClick(tv.id)} color='purple' fontSize={45} id='playIcon'href="#trailer" />
+              <a onClick={toTop}><AiFillPlayCircle onClick={() => handlePlayClick(tv.id)} color='purple' fontSize={45} id='playIcon'/></a>
             </div>
           ))}
         </Slider>
@@ -261,7 +245,7 @@ function TvShows() {
           {reality.map((tv) => (
             <div className=''>
               <img width='200' src={tv.poster_path ? `${Images}${tv.poster_path}` : notAvailable} alt='' />
-              <AiFillPlayCircle onClick={() => handlePlayClick(tv.id)} color='purple' fontSize={45} id='playIcon'href="#trailer" />
+              <a onClick={toTop}><AiFillPlayCircle onClick={() => handlePlayClick(tv.id)} color='purple' fontSize={45} id='playIcon'/></a>
             </div>
           ))}
         </Slider>
