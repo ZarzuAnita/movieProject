@@ -1,19 +1,17 @@
+
 import axios from 'axios'
 import React, { Fragment, Component } from 'react'
 import { AiFillPlayCircle } from 'react-icons/ai'
+import { AiOutlineClose } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import notAvailable from './notAvailable.png';
 import Slider from 'react-slick';
-import "./SimpleSlider/slick.css"; 
+import "./SimpleSlider/slick.css";
 import "./SimpleSlider/slick-theme.css";
 import '../styles/moviesStyle.css'
+import YouTube from 'react-youtube';
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles'
+
 
 
 function Movies() {
@@ -24,19 +22,21 @@ function Movies() {
   const [sf, setSFMovies] = useState([])
   const [western, setWesternMovies] = useState([])
 
-  
+  const [trailer, setTrailer] = useState(null)
+
 
   const Api = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}`;
   const Images = 'https://image.tmdb.org/t/p/w500';
+  const trailerApi = `https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=${process.env.REACT_APP_API_KEY}`
 
   const PopularMoviesCall = async () => {
     const respMovie = await axios.get(Api, {
       params: {
         api_key: process.env.REACT_APP_API_KEY,
         language: 'en-US',
-        include_adult:'default',
-        include_video:'default',
-        with_genres:'28'
+        include_adult: 'default',
+        include_video: 'default',
+        with_genres: '28'
 
       }
     })
@@ -48,9 +48,9 @@ function Movies() {
       params: {
         api_key: process.env.REACT_APP_API_KEY,
         language: 'en-US',
-        include_adult:'default',
-        include_video:'default',
-        with_genres:'35'
+        include_adult: 'default',
+        include_video: 'default',
+        with_genres: '35'
 
       }
     })
@@ -64,9 +64,9 @@ function Movies() {
       params: {
         api_key: process.env.REACT_APP_API_KEY,
         language: 'en-US',
-        include_adult:'false',
-        include_video:'default',
-        with_genres:'18'
+        include_adult: 'false',
+        include_video: 'default',
+        with_genres: '18'
 
       }
     })
@@ -80,9 +80,9 @@ function Movies() {
       params: {
         api_key: process.env.REACT_APP_API_KEY,
         language: 'en-US',
-        include_adult:'false',
-        include_video:'default',
-        with_genres:'878'
+        include_adult: 'false',
+        include_video: 'default',
+        with_genres: '878'
 
       }
     })
@@ -95,9 +95,9 @@ function Movies() {
       params: {
         api_key: process.env.REACT_APP_API_KEY,
         language: 'en-US',
-        include_adult:'false',
-        include_video:'default',
-        with_genres:'37'
+        include_adult: 'false',
+        include_video: 'default',
+        with_genres: '37'
 
       }
     })
@@ -106,120 +106,181 @@ function Movies() {
     console.log(western)
 
 
+    const respTrailer = await axios.get(trailerApi, {
+      params: {
+        api_key: process.env.REACT_APP_API_KEY,
+        language: 'en-US',
+        append_to_response: 'videos',
 
+
+      }
+    })
+    const results6 = respTrailer.data.results;
+    setTrailer(results6)
+    console.log(trailer)
   }
 
-useEffect(() => {
+
+  const getMovieTrailer = async (movieId) => {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${process.env.REACT_APP_API_KEY}`);
+    const data = await response.json();
+    return data;
+  }
+
+  const handlePlayClick = async (movieId) => {
+    const movieTrailer = await getMovieTrailer(movieId);
+    setTrailer(movieTrailer);
+  }
+
+  const handleCloseClick = () => {
+    setTrailer(null);
+  }
+
+  const handleReady = (event) => {
+    event.target.playVideo();
+  };
+
+  useEffect(() => {
     PopularMoviesCall()
+
   }, [])
   console.log(popularMovies)
 
+  useEffect(() => {
+    getMovieTrailer()
 
-    const settings = {
-      className: "center",
-      centerMode: true,
-      centerPadding: "60px",
-      infinite: true,
-      slidesToShow: 5,
-      slidesToScroll:4,
-      speed: 500,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            infinite: true,
-            dots: true
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2,
-            initialSlide: 2
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
+  })
+
+
+  const settings = {
+    className: "center",
+    centerMode: true,
+    centerPadding: "60px",
+    infinite: true,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    speed: 500,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
         }
-      ]
-    };
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
+
+  const opts = {
+    width: '100%',
+    height: '100%',
+    playerVars: {
+      autoplay: 1,
+    },
+  };
+
+
 
   return (
     <Fragment>
-   
+      <div>
+        {trailer && (
+          <YouTube
+            id="trailer"
+            videoId={trailer.key}
+            onReady={handleReady}
+            opts={opts}  
+          />
+        )}
+        <div style={{ display: trailer ? 'block' : 'none' }}>
+          <AiOutlineClose className="trailer__close" onClick={handleCloseClick} />
+        </div>
+      </div>
+
       <div className="simple">
-          <h2>Action</h2>
-            <Slider {...settings}>
-              {popularMovies.map((movie) => (
-              <div>                         
-                <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
-                <AiFillPlayCircle color='purple' fontSize={45} id='playIcon' />
-              </div>
-                   
-            ))}
-           
-            </Slider> 
-            
+        <h2>Action</h2>
+        <Slider {...settings}>
+          {popularMovies.map((movie) => (
+            <div >
+              <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
+              <a href="#"></a>
+              <AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon' href="#trailer" />
+            </div>
+
+          ))}
+
+        </Slider>
+
       </div>
       <div className="simple">
-          <h2>Comedy</h2>
-          <Slider {...settings}> 
-              {comedy.map((movie) => (
-              <div className=''>                
-                <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
-                <AiFillPlayCircle color='purple' fontSize={45} id='playIcon' />
-              </div>
-            ))}
+        <h2>Comedy</h2>
+        <Slider {...settings}>
+          {comedy.map((movie) => (
+            <div className=''>
+              <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
+              <AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon' href="#trailer" />
+            </div>
+          ))}
         </Slider>
       </div>
 
       <div className="simple">
-          <h2>Drama</h2> 
-          <Slider {...settings}>
-              {drama.map((movie) => (
-              <div className=''>                
-                <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
-                <AiFillPlayCircle color='purple' fontSize={45} id='playIcon' />
-              </div>
-            ))}
-          </Slider>
+        <h2>Drama</h2>
+        <Slider {...settings}>
+          {drama.map((movie) => (
+            <div className=''>
+              <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
+              <AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon' href="#trailer" />
+            </div>
+          ))}
+        </Slider>
       </div>
 
 
       <div className="simple">
-          <h2>Science Fiction</h2> 
-          <Slider {...settings}>
-              {sf.map((movie) => (
-              <div className=''>                
-                <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
-                <AiFillPlayCircle color='purple' fontSize={45} id='playIcon' />
-              </div>
-            ))}
-          </Slider>
+        <h2>Science Fiction</h2>
+        <Slider {...settings}>
+          {sf.map((movie) => (
+            <div className=''>
+              <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
+              <AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon'href="#trailer" />
+            </div>
+          ))}
+        </Slider>
       </div>
 
       <div className="simple">
-          <h2>Western</h2>
-          <Slider {...settings}> 
-              {western.map((movie) => (
-              <div className=''>                
-                <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
-                <AiFillPlayCircle color='purple' fontSize={45} id='playIcon' />
-              </div>
-            ))}
-         </Slider>
+        <h2>Western</h2>
+        <Slider {...settings}>
+          {western.map((movie) => (
+            <div className=''>
+              <img width='200' src={movie.poster_path ? `${Images}${movie.poster_path}` : notAvailable} alt='' />
+              <AiFillPlayCircle onClick={() => handlePlayClick(movie.id)} color='purple' fontSize={45} id='playIcon'href="#trailer"/>
+            </div>
+          ))}
+        </Slider>
       </div>
-    
+
     </Fragment>
   )
-              }             
+}
 
 
 
