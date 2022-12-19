@@ -1,7 +1,14 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
+import { AiFillPlayCircle } from 'react-icons/ai'
+import { AiOutlineClose } from 'react-icons/ai';
+import Slider from 'react-slick';
+import '../SimpleSlider/slick.css';
+import '../SimpleSlider/slick-theme.css';
+import './homeStyle.css'
+import YouTube from 'react-youtube';
+import PropTypes from 'prop-types';
 
 
 function Home (){
@@ -103,68 +110,137 @@ function Home (){
         movieCall();
       }, []);
 
+
+      const settings = {
+        className: "center",
+        centerMode: true,
+        centerPadding: "60px",
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        speed: 500,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              initialSlide: 2
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      };
+    
+      const opts = {
+        width: '100%',
+        height: '100%',
+        playerVars: {
+          autoplay: 1,
+        },
+      };
+    
+
+
+
     return (
-      <div className=''>
+
+      <Fragment>
+      <div className='simple'>
           <div className=''>
               <img src={randomMov ? `${images}${randomMov.backdrop_path}` : ""} alt="image not found"/>
               <h3>{randomMov.title}</h3> 
           </div>
-          <div>
-            <h3>Top Rated</h3>
+          
+          <div className="simple">
+            <h2>Top Rated</h2>
+            
             {topRated.map((movie, index) => {
                 return (
+                  
                  <div key={index} className="">
-                    <img src={movie ? images + movie.poster_path : ""} alt="image not found"/>
+                  
+                    <img width='200' src={movie ? images + movie.poster_path : ""} alt="image not found"/>
+                 
                 </div>
+              
                 )})};
+     
         </div>
-        <div>
-            <h3>Discover Movies</h3>
+        <div className="simple">
+            <h2>Discover Movies</h2>
+            
             {movies.map((movie, index) => {
                 return (
                  <div key={index} className="">
-                    <img src={movie ? images + movie.poster_path : ""} alt="image not found"/>
-                    <h3>{movie.title}</h3>
+                    <img width='200' src={movie ? images + movie.poster_path : ""} alt="image not found"/>
+                   
                 </div>
                 )})};
+           
         </div>
-        <div>
-            <h3>Fiction Movies</h3>
+        
+        <div className="simple">
+            <h2>Fiction Movies</h2>
+           
             {fictionMovies.map((movie, index) => {
                 return (
                  <div key={index} className="">
-                    <img src={movie ? images + movie.poster_path : ""} alt="image not found"/>
+                    <img width='200'src={movie ? images + movie.poster_path : ""} alt="image not found"/>
                 </div>
                 )})};
+           
         </div>
-        <div>
-            <h3>Thriller Movies</h3>
+        <div className="simple">
+            <h2>Thriller Movies</h2>
+            
             {thrillerMovies.map((movie, index) => {
                 return (
                  <div key={index} className="">
-                    <img src={movie ? images + movie.poster_path : ""} alt="image not found"/>
+                    <img width='200' src={movie ? images + movie.poster_path : ""} alt="image not found"/>
                 </div>
                 )})};
+           
         </div>
-        <div>
-            <h3>Comedy Series</h3>
+        <div className="simple">
+            <h2>Comedy Series</h2>
+           
             {comedySeries.map((movie, index) => {
                 return (
                  <div key={index} className="">
-                    <img src={movie.poster_path ? images + movie.poster_path : ""}/>
+                    <img width='200' src={movie.poster_path ? images + movie.poster_path : ""}/>
                 </div>
                 )})};
+            
         </div>
-        <div>
-            <h3>Documentary Series</h3>
+        <div className="simple">
+            <h2>Documentary Series</h2>
+           
             {documentarySeries.map((movie, index) => {
                 return (
                  <div key={index} className="">
-                    <img src={movie ? images + movie.poster_path : ""} alt="image not found"/>
+                    <img width='200' src={movie ? images + movie.poster_path : ""} alt="image not found"/>
                 </div>
                 )})};
+            
         </div>
       </div>
+      </Fragment>
     )
 };
 
