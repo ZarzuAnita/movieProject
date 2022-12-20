@@ -203,6 +203,7 @@ function Home (){
         
         <div>
             <h2>Discover Movies</h2>
+
             </div>
             <div className="tablero">
             {movies.map((movie) => (
