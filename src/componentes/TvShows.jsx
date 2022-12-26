@@ -39,7 +39,7 @@ function TvShows() {
     })
     const results = respComedy.data.results;
     setComedyTv(results)
-    console.log(comedyTv)
+   
 
     const respAnimation = await axios.get(Api, {
       params: {
@@ -53,8 +53,7 @@ function TvShows() {
     })
     const results2 = respAnimation.data.results;
     setAnimationTv(results2)
-    console.log(animation)
-
+  
 
 
     const respDocumentary = await axios.get(Api, {
@@ -69,7 +68,7 @@ function TvShows() {
     })
     const results3 = respDocumentary.data.results;
     setDocumentaryTv(results3)
-    console.log(documentary)
+  
 
 
 
@@ -85,7 +84,7 @@ function TvShows() {
     })
     const results4 = respMystery.data.results;
     setMysteryTv(results4)
-    console.log(mystery)
+  
 
     const respReality = await axios.get(Api, {
       params: {
@@ -99,7 +98,7 @@ function TvShows() {
     })
     const results5 = respReality.data.results;
     setRealityTv(results5)
-    console.log(reality)
+   
   }  
 
 
@@ -179,7 +178,7 @@ function TvShows() {
     <div>
         {trailerTv && (
           <YouTube
-            videoId={trailerTv.results[0].key}
+            videoId={trailerTv.results[0] ? trailerTv.results[0].key : "trailer not found"}
             onReady={handleReady}
             opts={opts}  
           />

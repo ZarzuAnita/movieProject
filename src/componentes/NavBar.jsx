@@ -46,10 +46,10 @@ export default function NavBar() {
           <NavLink to=''>
             <span>Home</span>
           </NavLink>
-          <NavLink to='/Movies'>
+          <NavLink to='/movies'>
             <span>Movies</span>
           </NavLink>
-          <NavLink to='/TvShows'>
+          <NavLink to='/tvShows'>
             <span>Tv Shows</span>
           </NavLink>
 

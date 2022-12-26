@@ -41,8 +41,7 @@ function Movies() {
     })
     const results = respMovie.data.results;
     setPopularMovies(results)
-    console.log(popularMovies)
-
+  
     const respComedy = await axios.get(Api, {
       params: {
         api_key: process.env.REACT_APP_API_KEY,
@@ -55,7 +54,7 @@ function Movies() {
     })
     const results2 = respComedy.data.results;
     setComedyMovies(results2)
-    console.log(comedy)
+
 
 
 
@@ -71,7 +70,7 @@ function Movies() {
     })
     const results3 = respDrama.data.results;
     setDramaMovies(results3)
-    console.log(comedy)
+  
 
 
 
@@ -87,7 +86,7 @@ function Movies() {
     })
     const results4 = respSF.data.results;
     setSFMovies(results4)
-    console.log(sf)
+  
 
 
     const respwestern = await axios.get(Api, {
@@ -102,7 +101,7 @@ function Movies() {
     })
     const results5 = respwestern.data.results;
     setWesternMovies(results5)
-    console.log(western)
+  
 
  }
 
@@ -114,7 +113,7 @@ function Movies() {
 
   const handlePlayClick = async (movieId) => {
     const movieTrailer = await getMovieTrailer(movieId);
-    console.log(movieTrailer)
+
     setTrailer(movieTrailer);
   }
 
@@ -130,7 +129,7 @@ function Movies() {
     PopularMoviesCall()
 
   }, [])
-  console.log(popularMovies)
+
 
   
   const settings = {
@@ -182,14 +181,14 @@ function Movies() {
   }
 
   return (
-    <div>
+    <div >
       <div id= 'trailer'>        
       </div>
     <Fragment>
       <div>
         {trailer && (
           <YouTube         
-            videoId={trailer.results[0].key}
+            videoId= {trailer.results[0] ? trailer.results[0].key : "trailer not found"}
             onReady={handleReady}
             opts={opts}  
           />
